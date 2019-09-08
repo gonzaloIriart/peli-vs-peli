@@ -1,5 +1,5 @@
 // Esta es la ip y puerto en que necesitamos que esté el backend disponible
-var server = 'http://0.0.0.0:8080';
+var server = 'http://localhost:8080';
 
 function CompetenciasController () {
 
@@ -17,7 +17,7 @@ function CompetenciasController () {
 
 	this.cargarCompetencias = function (data){
 		// data es el listado de competencias que retornó la api (un objeto json)
-
+		console.log(data)
 		// Oculto la plantilla
 		$(".competenciaPlantilla").hide();
 		// Se recorren iterativamente, uno a uno, los resultados de competencias
