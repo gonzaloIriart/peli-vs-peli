@@ -14,6 +14,10 @@ app.use(bodyParser.json());
 
 app.get('/competencias',controlador.competencias);
 
+app.get('/competencias/:id/peliculas',controlador.peliculasCompetencia);
+
+app.post('/competencias/:idCompetencia"/voto',controlador.agregarVoto);
+
 var puerto = process.env.PORT || 8080;
 
 app.listen(puerto, function () {
