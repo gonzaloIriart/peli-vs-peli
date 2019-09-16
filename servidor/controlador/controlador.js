@@ -24,21 +24,29 @@ function peliculasCompetencia(req,res){
        if(result.length === 0){
            return res.status(404).json("No existe la competencia")
        }
-       console.log(result)
+       
        let respuesta = {
            competencia : result[0].nombre,
            peliculas : result
        }
-       console.log(respuesta)
+       
       res.send(JSON.stringify(respuesta));
     })
 }
 
 function agregarVoto(req,res){
     var id_competencia = req.params.idCompetencia;
-    var id_pelicula = data.idPelicula;
-    connection.query(`UPDATE voto SET cantidad = cantidad * 1.25
-     WHERE id_pelicula = ${id_pelicula} AND id_competencia = ${id_competencia};`, function (err, result, fields) {}) 
+    var id_pelicula = req.body.idPelicula;
+    //console.log(id_competencia, id_pelicula)
+    connection.query(`UPDATE voto SET cantidad_votos = cantidad_votos + 1
+     WHERE id_pelicula = ${id_pelicula} AND id_competencia = ${id_competencia};`, function (err, result, fields) {
+        if (err) {
+            console.log(err)
+            throw err;
+       }   
+       console.log(result)
+       res.json(result)
+     }) 
 }
 
 module.exports= {
