@@ -12,11 +12,23 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 
+app.get('/generos', controlador.generos);
+
+app.get('/directores', controlador.directores);
+
+app.get('/actores', controlador.actores);
+
 app.get('/competencias',controlador.competencias);
+
+app.post('/competencias',controlador.agregarCompetencia);
 
 app.get('/competencias/:id/peliculas',controlador.peliculasCompetencia);
 
+app.get('/competencias/:id/resultados',controlador.resultadosCompetencia);
+
 app.post('/competencias/:idCompetencia/voto',controlador.agregarVoto);
+
+app.delete('/competencias/:idCompetencia/votos',controlador.eliminarVotos);
 
 var puerto = process.env.PORT || 8080;
 

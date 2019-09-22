@@ -25,6 +25,10 @@ form input[type="button"], form input[type="submit"] {
 	text-transform: uppercase;
 }
 
+option{
+	background-color: #01be9d;
+}
+
 form .confirmar {
 	margin: 20px 0;
 }

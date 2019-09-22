@@ -3,14 +3,14 @@ CREATE TABLE `competencias`.`competencia` (
   `nombre` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id`))
 
-INSERT INTO `` (`id`,`nombre`) VALUES (1,'Mejor pelicula de acción');
-INSERT INTO `` (`id`,`nombre`) VALUES (2,'Mejor pelicula del año 2007');
-INSERT INTO `` (`id`,`nombre`) VALUES (3,'Pelicula para llorar de risa');
-INSERT INTO `` (`id`,`nombre`) VALUES (4,'Mejor pochoclera');
-INSERT INTO `` (`id`,`nombre`) VALUES (5,'Pelicula más dramática');
-INSERT INTO `` (`id`,`nombre`) VALUES (6,'Mejores efectos en cs ficción');
-INSERT INTO `` (`id`,`nombre`) VALUES (7,'Mejor documental');
-INSERT INTO `` (`id`,`nombre`) VALUES (8,'Mejor de mejores ');
+INSERT INTO `competencia` (`id`,`nombre`) VALUES (1,'Mejor pelicula de acción');
+INSERT INTO `competencia` (`id`,`nombre`) VALUES (2,'Mejor pelicula del año 2007');
+INSERT INTO `competencia` (`id`,`nombre`) VALUES (3,'Pelicula para llorar de risa');
+INSERT INTO `competencia` (`id`,`nombre`) VALUES (4,'Mejor pochoclera');
+INSERT INTO `competencia` (`id`,`nombre`) VALUES (5,'Pelicula más dramática');
+INSERT INTO `competencia` (`id`,`nombre`) VALUES (6,'Mejores efectos en cs ficción');
+INSERT INTO `competencia` (`id`,`nombre`) VALUES (7,'Mejor documental');
+INSERT INTO `competencia` (`id`,`nombre`) VALUES (8,'Mejor de mejores');
 
 
 CREATE TABLE `competencias`.`voto` (
