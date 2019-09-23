@@ -70,3 +70,28 @@ SELECT p.id,8,0
 FROM pelicula p    
 WHERE puntuacion > 8
 LIMIT 10
+
+ALTER TABLE `competencias`.`competencia` 
+ADD COLUMN `genero_id` INT UNSIGNED NULL AFTER `nombre`,
+ADD COLUMN `actor_id` INT UNSIGNED NULL AFTER `genero_id`,
+ADD COLUMN `director_id` INT UNSIGNED NULL AFTER `actor_id`,
+ADD INDEX `genero_id_idx` (`genero_id` ASC) VISIBLE,
+ADD INDEX `actor_id_idx` (`actor_id` ASC) VISIBLE,
+ADD INDEX `director_id_idx` (`director_id` ASC) VISIBLE;
+;
+ALTER TABLE `competencias`.`competencia` 
+ADD CONSTRAINT `genero_id`
+  FOREIGN KEY (`genero_id`)
+  REFERENCES `competencias`.`genero` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION,
+ADD CONSTRAINT `actor_id`
+  FOREIGN KEY (`actor_id`)
+  REFERENCES `competencias`.`actor` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION,
+ADD CONSTRAINT `director_id`
+  FOREIGN KEY (`director_id`)
+  REFERENCES `competencias`.`director` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
