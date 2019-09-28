@@ -108,10 +108,10 @@ function agregarCompetencia(req, res) {
       } else {
         let checkCantidadPelis = [];
         queryCantidadPelis = `SELECT p.id
-    FROM pelicula p
-    INNER JOIN actor_pelicula ap ON ap.pelicula_id = p.id
-    INNER JOIN actor a ON a.id = ap.actor_id    
-    WHERE `;
+        FROM pelicula p
+        INNER JOIN actor_pelicula ap ON ap.pelicula_id = p.id
+        INNER JOIN actor a ON a.id = ap.actor_id    
+        WHERE `;
         if (genero !== undefined) {
           checkCantidadPelis.push(` p.genero_id = ${genero} `);
         }
@@ -136,12 +136,6 @@ function agregarCompetencia(req, res) {
               .send("La competencia debe tener mas de dos peliculas");
           } else {
             // Agregamos la competencia
-            /*INSERT INTO voto (id_pelicula,cantidad_votos) 
-            SELECT p.id, 0 
-            FROM pelicula p    
-            WHERE  
-            LIMIT 10
-            */
             connection.query(query, function(err, result, fields) {
               console.log(genero, actor, director, nombre);
               console.log(query);
@@ -168,10 +162,7 @@ function eliminarCompetencia(req, res) {
       throw err;
     }
     console.log(result);
-    return res
-      .status(200)
-      .json("Los votos de la competencia fueron eliminados correctamente");
-  });
+    });
   connection.query(`DELETE FROM competencia WHERE id = ${id}`, function(
     err,
     result,
@@ -188,17 +179,17 @@ function eliminarCompetencia(req, res) {
 
 function modificarCompetencia(req, res) {
   var id = parseInt(req.params.id);
-  var { nuevoTitulo } = req.body;
+  var { nombre } = req.body;
   connection.query(
     `UPDATE competencia
-  SET nombre = '${nuevoTitulo}'
+  SET nombre = '${nombre}'
   WHERE id = ${id}`,
     function(err, result, fields) {
       if (err) {
         console.log(err);
         throw err;
       }
-      console.log(result);
+      console.log(req.body, nombre);
       return res
         .status(200)
         .json("La competencia fue modificada correctamente");
