@@ -22,6 +22,8 @@ app.get('/competencias', controlador.competencias);
 
 app.post('/competencias', controlador.agregarCompetencia);
 
+app.put('/competencias/:id', controlador.modificarCompetencia);
+
 app.delete('/competencias/:id', controlador.eliminarCompetencia);
 
 app.get('/competencias/:id/peliculas', controlador.peliculasCompetencia);

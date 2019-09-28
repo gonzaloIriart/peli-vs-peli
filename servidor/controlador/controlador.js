@@ -1,12 +1,5 @@
 var connection = require("../lib/conexiondb");
 
-/*INSERT INTO voto (id_pelicula,cantidad_votos) 
-SELECT p.id, 0 
-FROM pelicula p    
-WHERE  
-LIMIT 10
- */
-
 function actores(req, res) {
   connection.query("SELECT * FROM actor", function(err, result, fields) {
     if (err) {
@@ -91,32 +84,6 @@ function agregarVoto(req, res) {
   );
 }
 
-function eliminarCompetencia(req, res) {
-  let { id } = req.body;
-  connection.query(`DELETE FROM voto WHERE id_competencia = ${id}`,
-  function(err, result, fields) {
-    if (err) {
-      console.log(err);
-      throw err;
-    }
-    console.log(result);
-    return res
-                .status(200)
-                .json("Los votos de la competencia fueron eliminados correctamente");
-  })
-  connection.query(`DELETE FROM competencia WHERE id = ${id}`,
-  function(err, result, fields) {
-    if (err) {
-      console.log(err);
-      throw err;
-    }
-    console.log(result);
-    return res
-                .status(200)
-                .json("La competencia fue eliminada correctamente");
-  })
-}
-
 function agregarCompetencia(req, res) {
   let check = [];
   let { genero, actor, director, nombre } = req.body;
@@ -160,7 +127,7 @@ function agregarCompetencia(req, res) {
             queryCantidadPelis = queryCantidadPelis + ` AND `;
           }
         }
-        // Checkeamos si hay mas de dos peliculas para agregar a la competencia  
+        // Checkeamos si hay mas de dos peliculas para agregar a la competencia
         connection.query(queryCantidadPelis, function(err, result, fields) {
           if (result.length < 2) {
             console.log(result);
@@ -169,6 +136,12 @@ function agregarCompetencia(req, res) {
               .send("La competencia debe tener mas de dos peliculas");
           } else {
             // Agregamos la competencia
+            /*INSERT INTO voto (id_pelicula,cantidad_votos) 
+            SELECT p.id, 0 
+            FROM pelicula p    
+            WHERE  
+            LIMIT 10
+            */
             connection.query(query, function(err, result, fields) {
               console.log(genero, actor, director, nombre);
               console.log(query);
@@ -179,6 +152,56 @@ function agregarCompetencia(req, res) {
           }
         });
       }
+    }
+  );
+}
+
+function eliminarCompetencia(req, res) {
+  var id = parseInt(req.params.id);
+  connection.query(`DELETE FROM voto WHERE id_competencia = ${id}`, function(
+    err,
+    result,
+    fields
+  ) {
+    if (err) {
+      console.log(err);
+      throw err;
+    }
+    console.log(result);
+    return res
+      .status(200)
+      .json("Los votos de la competencia fueron eliminados correctamente");
+  });
+  connection.query(`DELETE FROM competencia WHERE id = ${id}`, function(
+    err,
+    result,
+    fields
+  ) {
+    if (err) {
+      console.log(err);
+      throw err;
+    }
+    console.log(result);
+    return res.status(200).json("La competencia fue eliminada correctamente");
+  });
+}
+
+function modificarCompetencia(req, res) {
+  var id = parseInt(req.params.id);
+  var { nuevoTitulo } = req.body;
+  connection.query(
+    `UPDATE competencia
+  SET nombre = '${nuevoTitulo}'
+  WHERE id = ${id}`,
+    function(err, result, fields) {
+      if (err) {
+        console.log(err);
+        throw err;
+      }
+      console.log(result);
+      return res
+        .status(200)
+        .json("La competencia fue modificada correctamente");
     }
   );
 }
@@ -226,6 +249,7 @@ function eliminarVotos(req, res) {
 module.exports = {
   competencias: competencias,
   eliminarCompetencia: eliminarCompetencia,
+  modificarCompetencia: modificarCompetencia,
   generos: generos,
   actores: actores,
   directores: directores,
