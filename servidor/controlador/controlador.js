@@ -91,6 +91,32 @@ function agregarVoto(req, res) {
   );
 }
 
+function eliminarCompetencia(req, res) {
+  let { id } = req.body;
+  connection.query(`DELETE FROM voto WHERE id_competencia = ${id}`,
+  function(err, result, fields) {
+    if (err) {
+      console.log(err);
+      throw err;
+    }
+    console.log(result);
+    return res
+                .status(200)
+                .json("Los votos de la competencia fueron eliminados correctamente");
+  })
+  connection.query(`DELETE FROM competencia WHERE id = ${id}`,
+  function(err, result, fields) {
+    if (err) {
+      console.log(err);
+      throw err;
+    }
+    console.log(result);
+    return res
+                .status(200)
+                .json("La competencia fue eliminada correctamente");
+  })
+}
+
 function agregarCompetencia(req, res) {
   let check = [];
   let { genero, actor, director, nombre } = req.body;
@@ -106,7 +132,7 @@ function agregarCompetencia(req, res) {
       query = query + `); `;
     }
   }
-  // Checkeamos si existe la competencia
+  // Checkeamos si ya existe la competencia con ese mismo nombre
   connection.query(
     `SELECT * FROM competencia WHERE nombre = '${nombre}'`,
     function(err, result, fields) {
@@ -134,6 +160,7 @@ function agregarCompetencia(req, res) {
             queryCantidadPelis = queryCantidadPelis + ` AND `;
           }
         }
+        // Checkeamos si hay mas de dos peliculas para agregar a la competencia  
         connection.query(queryCantidadPelis, function(err, result, fields) {
           if (result.length < 2) {
             console.log(result);
@@ -141,6 +168,7 @@ function agregarCompetencia(req, res) {
               .status(422)
               .send("La competencia debe tener mas de dos peliculas");
           } else {
+            // Agregamos la competencia
             connection.query(query, function(err, result, fields) {
               console.log(genero, actor, director, nombre);
               console.log(query);
@@ -153,11 +181,6 @@ function agregarCompetencia(req, res) {
       }
     }
   );
-  // Checkeamos si hay mas de dos peliculas para agregar a la competencia
-  /*
-    
-// Agregamos la competencia
-   */
 }
 
 function resultadosCompetencia(req, res) {
@@ -202,6 +225,7 @@ function eliminarVotos(req, res) {
 
 module.exports = {
   competencias: competencias,
+  eliminarCompetencia: eliminarCompetencia,
   generos: generos,
   actores: actores,
   directores: directores,

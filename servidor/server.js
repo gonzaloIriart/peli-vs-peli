@@ -18,17 +18,19 @@ app.get('/directores', controlador.directores);
 
 app.get('/actores', controlador.actores);
 
-app.get('/competencias',controlador.competencias);
+app.get('/competencias', controlador.competencias);
 
-app.post('/competencias',controlador.agregarCompetencia);
+app.post('/competencias', controlador.agregarCompetencia);
 
-app.get('/competencias/:id/peliculas',controlador.peliculasCompetencia);
+app.delete('/competencias/:id', controlador.eliminarCompetencia);
 
-app.get('/competencias/:id/resultados',controlador.resultadosCompetencia);
+app.get('/competencias/:id/peliculas', controlador.peliculasCompetencia);
 
-app.post('/competencias/:idCompetencia/voto',controlador.agregarVoto);
+app.get('/competencias/:id/resultados', controlador.resultadosCompetencia);
 
-app.delete('/competencias/:idCompetencia/votos',controlador.eliminarVotos);
+app.post('/competencias/:idCompetencia/voto', controlador.agregarVoto);
+
+app.delete('/competencias/:idCompetencia/votos', controlador.eliminarVotos);
 
 var puerto = process.env.PORT || 8080;
 
